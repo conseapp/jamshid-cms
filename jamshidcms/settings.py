@@ -35,6 +35,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
+    'rest_framework',
+    'corsheaders',
     'blog.apps.BlogConfig',
     'ckeditor',
     'ckeditor_uploader',
@@ -43,6 +46,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -74,10 +78,21 @@ WSGI_APPLICATION = 'jamshidcms.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'test1',
+        'USER': 'postgres',
+        'PASSWORD': '1414',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -131,3 +146,34 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        # 'rest_framework.renderers.BrowsableAPIRenderer',  # Comment out or remove this line
+        'rest_framework.renderers.JSONRenderer',
+        # Other renderers you want to include...
+    ],
+    # Other DRF settings...
+}
+
+# CORS CONFIG
+
+CORS_ALLOW_HEADERS = ['*']
+
+CORS_ALLOW_METHODS = ['*']
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_ALLOW_ALL = False
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost',
+    'http://localhost:5173',
+    'http://localhost:8080',
+    'https://jamshid.app',
+)
+# CSRF CONFIG
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://offcode.api.jamshid.app'
+]

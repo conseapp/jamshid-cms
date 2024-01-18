@@ -1,4 +1,14 @@
+from rest_framework.pagination import PageNumberPagination
+from bs4 import BeautifulSoup
 import requests
+
+
+class CustomPostPagination(PageNumberPagination):
+    page_size = 5  # Set the page size for posts
+
+
+class CustomCommentPagination(PageNumberPagination):
+    page_size = 7  # Set the page size for comments
 
 
 def check_authentication_api(request, token):
@@ -16,3 +26,8 @@ def check_authentication_api(request, token):
     except Exception as err:
         print(err)
         return False
+
+
+def extract_text_from_html(html_content):
+    soup = BeautifulSoup(html_content, 'html.parser')
+    return soup.get_text()

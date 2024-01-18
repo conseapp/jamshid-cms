@@ -19,6 +19,18 @@ class Post(models.Model):
     slug = models.SlugField(max_length=500, unique=True)
     comment = GenericRelation("Comment", related_name="post")
     category = models.ForeignKey("Category", on_delete=models.CASCADE, related_name='post')
+    extracted_body = models.TextField(blank=True, null=True)
+
+    # @property
+    # def extracted_body(self):
+    #     if self._extracted_body is None:
+    #         self._extracted_body = extract_text_from_html(self.body)
+    #     return self._extracted_body
+    #
+    # @extracted_body.setter
+    # def extracted_body(self, value):
+    #     # You can define custom logic here if needed
+    #     self._extracted_body = extract_text_from_html(self.body)
 
     def __str__(self):
         return self.title
@@ -46,7 +58,10 @@ class Category(models.Model):
     parent = models.ForeignKey("self", on_delete=models.SET_NULL, blank=True, null=True, related_name="child")
 
     def __str__(self):
-        return self.name
+        return f"{self.name} --> {self.parent.name}" if self.parent else self.name
+
+    def __repr__(self):
+        return f"{self.name} --> {self.parent.name}" if self.parent else self.name
 
     class Meta:
         verbose_name_plural = "Categories"

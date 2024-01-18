@@ -1,9 +1,10 @@
 from django.contrib.contenttypes.models import ContentType
-from django.shortcuts import render
 from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView
 from .serializers import CategorySerializer, CommentSerializer, PostSerializer
+from .utils import CustomCommentPagination, CustomPostPagination
 from rest_framework.response import Response
-from rest_framework import status
+
+from rest_framework import status, filters
 from .models import Post, Category, Comment
 from .decorators import login_required
 
@@ -22,7 +23,10 @@ class CategoryDetailView(RetrieveAPIView):
 class PostListView(ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    search_fields = ['name', 'description']
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title', 'extracted_body']
+    ordering = ['title']
+    pagination_class = CustomPostPagination
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -38,10 +42,12 @@ class PostDetailView(RetrieveAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     lookup_field = 'slug'
+    search_fields = ['title', 'body']
 
 
 class CommentListByPostAPIView(ListCreateAPIView):
     serializer_class = CommentSerializer
+    pagination_class = CustomCommentPagination
 
     def get_queryset(self):
         post_slug = self.kwargs['slug']

@@ -16,13 +16,14 @@ class PostAdmin(admin.ModelAdmin):
         models.TextField: {'widget': CKEditorWidget()},
     }
     readonly_fields = ['post_id', 'created_at', 'updated_at', 'image_tag']
-    list_display = ['title', 'render_html_content', 'category', 'updated_at', 'is_published']
+    list_display = ['title', 'custom_body', 'category', 'updated_at', 'is_published']
     search_fields = ['title']
     fieldsets = (
         (_(""), {'fields': (
             'title', 'body', 'image', 'image_tag', 'category', 'slug', 'is_published', 'created_at', 'updated_at',
             'post_id')}),
     )
+    actions = ('set_published', 'set_unpublished',)
 
     def image_tag(self, obj):
         return format_html(
@@ -31,7 +32,8 @@ class PostAdmin(admin.ModelAdmin):
     def render_html_content(self, obj):
         return format_html(obj.body)
 
-    actions = ('set_published', 'set_unpublished',)
+    def custom_body(self, obj):
+        return obj.extracted_body
 
     @admin.action(description='publish selected posts')
     def set_published(modeladmin, request, queryset):
@@ -48,6 +50,7 @@ class PostAdmin(admin.ModelAdmin):
         messages.success(request, "Successfully unpublished!")
 
     render_html_content.short_description = 'body'
+    custom_body.short_description = 'body'
     image_tag.short_description = 'Image preview'
     image_tag.allow_tags = True
 
@@ -56,6 +59,15 @@ class PostAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     readonly_fields = ['id']
+    list_display = ['model_str', 'parent', 'post_count', 'id']
+
+    def model_str(self, obj):
+        return str(obj)
+
+    def post_count(self, obj):
+        return obj.post.count()
+
+    model_str.short_description = 'Category'
 
 
 @admin.register(Comment)
