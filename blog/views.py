@@ -34,7 +34,12 @@ class PostListView(ListAPIView):
         if category_slug:
             category = Category.objects.get(slug=category_slug)
             if category:
-                queryset = queryset.filter(category=category)
+                descendants = self.request.query_params.get('descendants', None)
+                if descendants == "False":
+                    queryset = queryset.filter(category=category)
+                categories = category.get_descendants()
+                categories.append(category)
+                queryset = queryset.filter(category__in=categories)
         return queryset
 
 

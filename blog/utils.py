@@ -31,3 +31,6 @@ def check_authentication_api(request, token):
 def extract_text_from_html(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
     return soup.get_text()
+
+
+

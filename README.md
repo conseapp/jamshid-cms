@@ -59,6 +59,13 @@ https://cms.api.jamshid.app/blog/categories/
 ```console
 https://cms.api.jamshid.app/blog/category/<category-slug>/
 ```
+* return all posts in current and sub categories
+* if you want to fetch just queried category
+* pass "descendants=False" in query kwargs
+#### get only queried category posts
+```console
+https://cms.api.jamshid.app/blog/category/<category-slug>/?descendants=False
+```
 * paginated by 5
 #### get page query
 ```console
