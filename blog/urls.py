@@ -8,3 +8,4 @@ urlpatterns = [
     path('categories/', views.CategoryListView.as_view(), name='category-list'),
     path('post/<str:slug>/comments/', views.CommentListByPostAPIView.as_view(), name='comments-by-post'),
 ]
+

@@ -1,5 +1,6 @@
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
+from ckeditor.fields import RichTextField
 from django.db import models
 import uuid
 
@@ -9,8 +10,8 @@ import uuid
 
 class Post(models.Model):
     title = models.CharField(max_length=500)
-    image = models.ImageField(upload_to='post_images')
-    body = models.TextField()
+    image = models.ImageField(upload_to='post-images')
+    body = RichTextField()
     post_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
