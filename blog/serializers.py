@@ -16,6 +16,8 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField()
+    created_at = serializers.SerializerMethodField()
+    updated_at = serializers.SerializerMethodField()
 
     # comment = CommentSerializer()
 
@@ -25,3 +27,9 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_category(self, obj):
         return obj.category.name
+
+    def get_created_at(self, obj):
+        return obj.created_at.strftime("%Y-%m-%d %H:%M:%S")
+
+    def get_updated_at(self, obj):
+        return obj.updated_at.strftime("%Y-%m-%d %H:%M:%S")

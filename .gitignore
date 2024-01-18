@@ -3,3 +3,5 @@ venv
 .venv
 db.sqlite3
 post_images
+blog/__pycache__/
+__pycache__
