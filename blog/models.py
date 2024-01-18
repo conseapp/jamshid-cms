@@ -17,7 +17,7 @@ class Post(models.Model):
     is_published = models.BooleanField(default=False)
     slug = models.SlugField(max_length=500, unique=True)
     comment = GenericRelation("Comment", related_name="post")
-    category = GenericRelation("Category", related_query_name='post')
+    category = models.ForeignKey("Category", on_delete=models.CASCADE, related_name='post')
 
     def __str__(self):
         return self.title
@@ -41,11 +41,11 @@ class Comment(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
-
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.CharField(max_length=200)
-    content_object = GenericForeignKey('content_type', 'object_id')
-    category = GenericRelation("Category", related_query_name='category')
+    slug = models.SlugField(max_length=500, unique=True)
+    parent = models.ForeignKey("self", on_delete=models.SET_NULL, blank=True, null=True, related_name="child")
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "Categories"
