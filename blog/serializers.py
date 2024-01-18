@@ -3,9 +3,19 @@ from .models import Category, Post, Comment
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    breadcrumbs = serializers.SerializerMethodField()
+    parent = serializers.SerializerMethodField()
+
     class Meta:
         model = Category
         fields = '__all__'
+
+    def get_breadcrumbs(self, obj):
+        return str(obj)
+
+    def get_parent(self, obj):
+
+        return str(obj.parent.name) if obj.parent else None
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -31,6 +41,7 @@ class PostSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_category(self, obj):
+        # return str(obj.category)
         return obj.category.name
 
     def get_created_at(self, obj):

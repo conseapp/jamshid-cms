@@ -4,7 +4,7 @@ import requests
 
 
 class CustomPostPagination(PageNumberPagination):
-    page_size = 5  # Set the page size for posts
+    page_size = 15  # Set the page size for posts
 
 
 class CustomCommentPagination(PageNumberPagination):

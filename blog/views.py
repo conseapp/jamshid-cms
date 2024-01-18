@@ -25,7 +25,6 @@ class PostListView(ListAPIView):
     serializer_class = PostSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'extracted_body']
-    ordering = ['title']
     pagination_class = CustomPostPagination
 
     def get_queryset(self):
@@ -40,6 +39,7 @@ class PostListView(ListAPIView):
                 categories = category.get_descendants()
                 categories.append(category)
                 queryset = queryset.filter(category__in=categories)
+        # return queryset.order_by('created_at').all() ## for ordering
         return queryset
 
 
