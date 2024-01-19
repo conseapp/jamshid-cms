@@ -123,31 +123,37 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 4. install requirements
+### 4. install postgres dependencies
+
+```console
+sudo apt install python3-dev libpq-dev
+```
+
+### 5. install requirements
 
 ```console
 pip3 install -r requirements.txt
 ```
 
-### 5. make migrations
+### 6. make migrations
 
 ```console
 python3 manage.py makemigrations
 ```
 
-### 6. migrate
+### 7. migrate
 
 ```console
 python3 manage.py migrate
 ```
 
-### 7. create admin user
+### 8. create admin user
 
 ```console
 python2 manage.py createsuperuser
 ```
 
-### 8. run
+### 9. run
 
 ```console
 python manage.py runserver
