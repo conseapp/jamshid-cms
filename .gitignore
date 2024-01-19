@@ -6,3 +6,5 @@ post_images
 blog/__pycache__/
 __pycache__
 .env
+media
+static

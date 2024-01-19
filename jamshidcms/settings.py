@@ -91,9 +91,9 @@ WSGI_APPLICATION = 'jamshidcms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'test1',
-        'USER': 'postgres',
-        'PASSWORD': '1414',
+        'NAME': os.environ.get("DB_NAME"),
+        'USER': os.environ.get("DB_USER"),
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -135,9 +135,9 @@ STATIC_URL = 'static/'
 
 STATIC_ROOT = BASE_DIR / 'static'
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'staticfiles'
-]
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'staticfiles'
+# ]
 
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -178,5 +178,5 @@ CORS_ORIGIN_WHITELIST = (
 # CSRF CONFIG
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://offcode.api.jamshid.app'
+    'https://cms.api.jamshid.app'
 ]

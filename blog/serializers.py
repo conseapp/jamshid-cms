@@ -33,6 +33,7 @@ class PostSerializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField()
     created_at = serializers.SerializerMethodField()
     updated_at = serializers.SerializerMethodField()
+    image = serializers.SerializerMethodField()
 
     # comment = CommentSerializer()
 
@@ -49,3 +50,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_updated_at(self, obj):
         return obj.updated_at.strftime("%Y-%m-%d %H:%M:%S")
+
+    def get_image(self, obj):
+        base_domain = "https://cms.api.jamshid.app"
+        return base_domain + obj.image.url
