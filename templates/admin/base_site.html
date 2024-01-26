@@ -1,0 +1,18 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% block title %}My Admin Panel{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name"><a href="{% url 'admin:index' %}">My Admin Panel</a></h1>
+{% endblock %}
+
+{% block nav-global %}
+
+    <script>
+        let logout_link = document.querySelector('.grp-logout')
+        console.log(logout_link)
+        logout_link.outerHTML = `<form id="logout-form" method="post" action="{% url 'admin:logout' %}">{% csrf_token %} <a href="#" onclick="document.getElementById('logout-form').submit()">{% translate 'Log out' %} </a> </form>`;
+    </script>
+
+{% endblock %}
+

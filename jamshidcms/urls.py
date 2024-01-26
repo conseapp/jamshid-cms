@@ -18,11 +18,14 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings
 from django.contrib import admin
+# from filebrowser.sites import site
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),
-    path('ckeditor/', include('ckeditor_uploader.urls'))
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+    # path('filebrowser/', site.urls),
+    # path('grappelli/', include('grappelli.urls')),
 ]
 
 if settings.DEBUG:

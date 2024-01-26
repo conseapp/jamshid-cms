@@ -25,13 +25,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(int(os.environ.get("DEBUG")))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 
 INSTALLED_APPS = [
+    # 'grappelli',
+    # 'filebrowser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -62,8 +64,7 @@ ROOT_URLCONF = 'jamshidcms.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,12 +82,6 @@ WSGI_APPLICATION = 'jamshidcms.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 DATABASES = {
     'default': {
@@ -135,9 +130,7 @@ STATIC_URL = 'static/'
 
 STATIC_ROOT = BASE_DIR / 'static'
 
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'staticfiles'
-# ]
+# Media files (User Uploaded Images)
 
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -148,7 +141,11 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CKEDITOR_UPLOAD_PATH = "ck_uploads/"
+# CKEDITOR CONFIG
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_BROWSE_PATH = "_version/"
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
@@ -166,7 +163,7 @@ CKEDITOR_THUMBNAIL_SIZE = (150, 150)
 
 CKEDITOR_ALLOW_NONIMAGE_FILES = False
 
-# DATA_UPLOAD_MAX_MEMORY_SIZE = 1024
+DATA_UPLOAD_MAX_MEMORY_SIZE = 2621440
 
 # CKEDITOR_JQUERY_URL = 'https://code.jquery.com/jquery-3.6.0.min.js'  # Use a CDN or your own jQuery version
 
@@ -177,14 +174,17 @@ CKEDITOR_CONFIGS = {
         'height': 400,
         'filebrowserUploadUrl': '/ckeditor/upload/',
         'filebrowserBrowseUrl': '/ckeditor/browse/',
+        'filebrowserImagePreviewText': ' ',
         'filebrowserWindowHeight': 725,
         'filebrowserWindowWidth': 1024,
+        'image_previewText': ' ',
         'toolbarCanCollapse': True,
         'tabSpaces': 4,
 
-
     }
 }
+
+# DRF CONFIG
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
@@ -211,8 +211,24 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8080',
     'https://jamshid.app',
 )
-# CSRF CONFIG
 
 CSRF_TRUSTED_ORIGINS = [
     'https://cms.api.jamshid.app'
 ]
+
+# Filebrowser CONFIG
+
+# FILEBROWSER_DIRECTORY = 'uploads/'
+#
+# FILEBROWSER_EXTENSIONS = {
+#     'Image': ['.jpg', '.jpeg', '.gif', '.png', '.tif', '.tiff'],
+#     'Document': ['.pdf', '.doc', '.rtf', '.txt', '.xls', '.csv'],
+#     'Video': ['.mov', '.wmv', '.mpeg', '.mpg', '.avi', '.rm'],
+#     'Audio': ['.mp3', '.mp4', '.wav', '.aiff', '.midi', '.m4p']
+# }
+# FILEBROWSER_SELECT_FORMATS = {
+#     'file': ['Image', 'Document', 'Video', 'Audio'],
+#     'image': ['Image'],
+#     'document': ['Document'],
+#     'media': ['Video', 'Audio'],
+# }
