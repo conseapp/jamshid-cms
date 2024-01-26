@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from .models import Post, Category, Comment
-from ckeditor.widgets import CKEditorWidget
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django.db import models
 
 
@@ -13,7 +13,7 @@ from django.db import models
 class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     formfield_overrides = {
-        models.TextField: {'widget': CKEditorWidget()},
+        models.TextField: {'widget': CKEditorUploadingWidget(config_name='custom_ckeditor')},
     }
     readonly_fields = ['post_id', 'created_at', 'updated_at', 'image_tag']
     list_display = ['title', 'custom_body', 'category', 'updated_at', 'is_published']

@@ -122,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -148,13 +148,49 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_UPLOAD_PATH = "ck_uploads/"
+
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+
+CKEDITOR_FILENAME_GENERATOR = 'blog.utils.get_filename'
+
+CKEDITOR_RESTRICT_BY_USER = True
+
+CKEDITOR_RESTRICT_BY_DATE = True
+
+CKEDITOR_BROWSE_SHOW_DIRS = True
+
+CKEDITOR_IMAGE_BACKEND = 'pillow'  # Use Pillow for image processing
+
+CKEDITOR_THUMBNAIL_SIZE = (150, 150)
+
+CKEDITOR_ALLOW_NONIMAGE_FILES = False
+
+# DATA_UPLOAD_MAX_MEMORY_SIZE = 1024
+
+# CKEDITOR_JQUERY_URL = 'https://code.jquery.com/jquery-3.6.0.min.js'  # Use a CDN or your own jQuery version
+
+
+CKEDITOR_CONFIGS = {
+    'custom_ckeditor': {
+        'toolbar': 'full',
+        'height': 400,
+        'filebrowserUploadUrl': '/ckeditor/upload/',
+        'filebrowserBrowseUrl': '/ckeditor/browse/',
+        'filebrowserWindowHeight': 725,
+        'filebrowserWindowWidth': 1024,
+        'toolbarCanCollapse': True,
+        'tabSpaces': 4,
+
+
+    }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         # 'rest_framework.renderers.BrowsableAPIRenderer',  # Comment out or remove this line
         'rest_framework.renderers.JSONRenderer',
-        # Other renderers you want to include...
+
     ],
     # Other DRF settings...
 }
