@@ -3,16 +3,23 @@
 {% block title %}My Admin Panel{% endblock %}
 
 {% block branding %}
-    <h1 id="site-name"><a href="{% url 'admin:index' %}">My Admin Panel</a></h1>
+    <h1 id="site-name"><a href="{% url 'admin:index' %}">Django Admin Panel</a></h1>
 {% endblock %}
 
 {% block nav-global %}
-
-    <script>
-        let logout_link = document.querySelector('.grp-logout')
-        console.log(logout_link)
-        logout_link.outerHTML = `<form id="logout-form" method="post" action="{% url 'admin:logout' %}">{% csrf_token %} <a href="#" onclick="document.getElementById('logout-form').submit()">{% translate 'Log out' %} </a> </form>`;
-    </script>
+    {#    script for grappelli sign_out function#}
+    {#    <script>#}
+    {#let logout_link = document.querySelector('.grp-logout')#}
+    {#console.log(logout_link)#}
+    {#logout_link.outerHTML = `<form id="logout-form" method="post" action="{% url 'admin:logout' %}">{% csrf_token %} <a href="#" onclick="document.getElementById('logout-form').submit()">{% translate 'Log out' %} </a> </form>`;#}
+    {#    </script>#}
 
 {% endblock %}
 
+{% block footer %}
+    {{ block.super }}
+    <script>
+        site_title = document.querySelector('#content').children[0]
+        site_title.innerHTML = 'Jamshid CMS'
+    </script>
+{% endblock %}
